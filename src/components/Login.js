@@ -10,14 +10,14 @@ import {
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+import { USER_AVATAR } from "../utils/constants";
 const Login = () => {
   const [isSignnIn, setisSignIn] = useState(true);
   const email = useRef(null);
   const password = useRef(null);
   const name = useRef(null);
   const [errorMessage, seterrorMessage] = useState(null);
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const handlebuttonclick = () => {
@@ -46,15 +46,13 @@ const Login = () => {
               dispatch(
                 addUser({ uid: uid, email: email, displayName: displayName })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               seterrorMessage(error.message);
               // An error occurred
               // ...
             });
-          navigate("/browse");
-          console.log(user);
+
           // ...
         })
         .catch((error) => {
@@ -74,8 +72,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-          navigate("/browse");
+
           // ...
         })
         .catch((error) => {
